@@ -20,6 +20,9 @@ run_race:
 test:
 	go test ./src/... -v
 
+test_cover:
+	go test ./src/... -v -cover
+
 clean:
 	rm ./bin/*
 	rm ./logs/*
