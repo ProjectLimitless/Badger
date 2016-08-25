@@ -40,7 +40,7 @@ Open [http://127.0.0.1:8000/sample](http://127.0.0.1:8000/sample) in your browse
 
 The project makes use of Go's built-in testing.
 
-TODO: Add tests
+TODO: Add tests more
 
 ---
 *A part of Project Limitless*
