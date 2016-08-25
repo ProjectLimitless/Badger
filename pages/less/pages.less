@@ -1,0 +1,57 @@
+// out: ../css/page.css, sourcemap: false, compress: true
+/**
+ * This file is part of Badger.
+ * Copyright © 2016 Donovan Solms.
+ * Project Limitless
+ * https://www.projectlimitless.io
+ *
+ * Badger and Project Limitless is free software: you can redistribute it and/or modify
+ * it under the terms of the Apache License Version 2.0.
+ *
+ * You should have received a copy of the Apache License Version 2.0 with
+ * Badger. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
+ */
+
+// Responsive media queries
+@desktop: ~"only screen and (min-width: 940px)"; /* tablet, landscape iPad, lo-res laptops ands desktops */
+@tablet: ~"only screen and (min-width: 640px) and (max-width: 939px)"; /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+@medium: ~"only screen and (min-width: 480px) and (max-width: 639px)"; /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+@phone: ~"only screen and (min-width: 350px) and (max-width: 479px)"; /* smartphones, iPhone, portrait 480x320 phones */
+@mini: ~"only screen and (max-width: 349px)"; /* Bloody tiny */
+
+@import "elements.less";
+
+body {
+    background-color: #FFFFFF;
+}
+
+span.Passing {
+    color: #060;
+}
+span.Failing {
+    color: #600;
+}
+span.Unknown {
+    color: #006;
+}
+
+div.holder{
+    border: 1px solid #000000;
+    .border-radius(5px);
+    width: 50%;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 200px;
+
+    div.title {
+        text-align: center;
+    }
+
+    div.statuses {
+        padding: 10px;
+        div.overview {
+            font-weight: bold;
+        }
+    }
+}

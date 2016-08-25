@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{.ProjectName}} Status Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/page.css">
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="holder">
+            <div class="title">
+                <h1>{{.ProjectName}}</h1>
+            </div>
+            <div class="statuses">
+                <div class="overview">
+                    Overall status: <span class="{{.Overall.Status}}">{{.Overall.Status}}</span>
+                </div>
+                {{ range $provider, $status := .Providers}}
+                <div class="status" style="margin-bottom: 20px;">
+                    {{ $status.ProperName }}: <span class="{{ $status.Status}}">{{ $status.Status}}</span>
+                    {{ if $status.IsSuccess }}
+                        ({{ $status.BuildDateTime.Format "02 Jan 2006 15:04:05" }})<br/>
+                        <span style="color: #777">"{{ $status.CommitMessage }}"</span>
+                    {{ end }}
+                    {{ if eq $status.IsSuccess false }}
+                        <br/>
+                        <span style="color: #600">"{{ $status.Error }}"</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        <!-- TODO: Add Analytics -->
+    </body>
+</html>

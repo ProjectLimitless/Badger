@@ -1,0 +1,44 @@
+{
+    "Name": "Sample",
+    "Statuses": [
+        {
+            "Type": "Build",
+            "Provider": "AppVeyor",
+            "Url": "http://ci.appveyor.com/api/projects/donovansolms/ioRPC"
+        },
+        {
+            "Type": "Build",
+            "Provider": "TravisCI",
+            "Url": "https://api.travis-ci.org/repos/ProjectLimitless/ioRPC/builds"
+        }
+    ],
+    "Badge": {
+        "Template": {
+            "Background": "sample/background.png",
+            "Badges": {
+                "Passing": "build-passing.png",
+                "Failing": "build-failing.png",
+                "Unknown": "build-unknown.png"
+            }
+        },
+        "Overlays": [
+            {
+                "Provider": "AppVeyor",
+                "Position": {
+                    "Left": 130,
+                    "Top": 30
+                }
+            },
+            {
+                "Provider": "TravisCI",
+                "Position": {
+                    "Left": 230,
+                    "Top": 30
+                }
+            }
+        ]
+    },
+    "Page": {
+        "Template": "sample/page.html"
+    }
+}

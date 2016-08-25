@@ -1,0 +1,19 @@
+{
+    "Log": {
+        "Level": "DEBUG",
+        "Console": {
+            "Enabled": true,
+            "Format": "%{color}%{time:2006-01-02 15:04:05.000} %{level:.4s} %{id:04x} %{shortfunc} > %{color:reset}%{message}"
+        },
+        "File": {
+            "Enabled": true,
+            "RotateSizeMB": 100,
+            "Format": "%{time:2006-01-02 15:04:05.000} %{level:.4s} %{id:05x} %{shortfunc} > %{message}"
+        }
+    },
+    "Server": {
+        "IP": "0.0.0.0",
+        "Port": 8000,
+        "BasePath": ""
+    }
+}
