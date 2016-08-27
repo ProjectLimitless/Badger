@@ -2,6 +2,8 @@
 
 `Linux` `Windows`
 
+[![Coverage Status](https://coveralls.io/repos/github/ProjectLimitless/Badger/badge.svg?branch=master)](https://coveralls.io/github/ProjectLimitless/Badger?branch=master)
+
 A server that combines multiple continuous integration tools' statuses into a single badge with templating.
 
 ## Why use Badger
