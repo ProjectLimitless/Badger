@@ -2,10 +2,11 @@ language: go
 go:
   - 1.7
   - tip
+install:
+  - go get github.com/mattn/goveralls
 script:
   - make
   - make test
   - make test_cover_submit
   - ./remap_coverage.sh
-  - go tool cover -html=coverage.out -o cover.html
-  - cat cover.html
+  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
