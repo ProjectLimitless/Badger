@@ -1,6 +1,6 @@
 # Badger
 
-`Linux` [![Build Status](https://travis-ci.org/ProjectLimitless/Badger.svg?branch=master)](https://travis-ci.org/ProjectLimitless/Badger) `Windows`
+`Linux` [![Build Status](https://travis-ci.org/ProjectLimitless/Badger.svg?branch=master)](https://travis-ci.org/ProjectLimitless/Badger) `Windows` [![Build status](https://ci.appveyor.com/api/projects/status/mt02y82kkjta9qy7?svg=true)](https://ci.appveyor.com/project/donovansolms/badger)
 
 [![Coverage Status](https://coveralls.io/repos/github/ProjectLimitless/Badger/badge.svg?branch=master)](https://coveralls.io/github/ProjectLimitless/Badger?branch=master)
 
