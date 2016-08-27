@@ -1,6 +1,6 @@
 # Badger
 
-`Linux` `Windows`
+`Linux` [![Build Status](https://travis-ci.org/ProjectLimitless/Badger.svg?branch=master)](https://travis-ci.org/ProjectLimitless/Badger) `Windows`
 
 [![Coverage Status](https://coveralls.io/repos/github/ProjectLimitless/Badger/badge.svg?branch=master)](https://coveralls.io/github/ProjectLimitless/Badger?branch=master)
 
