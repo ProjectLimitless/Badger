@@ -48,6 +48,8 @@ type Badger struct {
 	Projects    map[string]ProjectConfig
 	PagesPath   string
 	BadgesPath  string
+	cacheSince  string
+	cacheUntil  string
 }
 
 // New creates a new instance of Badger
@@ -140,6 +142,9 @@ func New(config Config) (Badger, error) {
 	} else {
 		log.Info("Loaded %d project configs", len(badger.Projects))
 	}
+
+	badger.cacheSince = time.Now().Format(http.TimeFormat)
+	badger.cacheUntil = time.Now().Add(time.Second * 60).Format(http.TimeFormat)
 
 	return badger, nil
 }
@@ -289,6 +294,9 @@ func (badger *Badger) ProjectBadgeHandler(w http.ResponseWriter, r *http.Request
 			}
 		}
 		img := image.Image(backgroundImage)
+		w.Header().Set("Cache-Control", "no-cache, private")
+		w.Header().Set("Last-Modified", badger.cacheSince)
+		w.Header().Set("Expires", badger.cacheUntil)
 		writeImage(badger.log, w, img)
 		badger.log.Info("Badge rendered")
 
@@ -307,7 +315,6 @@ func writeImage(log *logging.Logger, w http.ResponseWriter, img image.Image) {
 	if err != nil {
 		log.Error("Unable to encode image: %s", err.Error())
 	}
-
 	w.Header().Set("Content-Type", "image/png")
 	w.Header().Set("Content-Length", strconv.Itoa(len(buffer.Bytes())))
 	_, err = w.Write(buffer.Bytes())
