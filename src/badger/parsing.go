@@ -46,6 +46,13 @@ func FetchStatus(status StatusConfig) (parsers.ProviderResult, error) {
 	result.ProperName = parser.Name()
 	result.IsSuccess = false
 
+	/*
+		body, err := ioutil.ReadFile(".cache/" + parser.Name() + ".json")
+		if err != nil {
+			return result, err
+		}
+	*/
+
 	// Get the content from the URL
 	client := &http.Client{
 		Timeout: time.Second * 10,

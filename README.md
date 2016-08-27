@@ -1,6 +1,6 @@
 # Badger
 
-`Linux` [![Build Status](https://travis-ci.org/ProjectLimitless/Badger.svg?branch=master)](https://travis-ci.org/ProjectLimitless/Badger) `Windows` [![Build status](https://ci.appveyor.com/api/projects/status/mt02y82kkjta9qy7?svg=true)](https://ci.appveyor.com/project/donovansolms/badger)
+[![Badger](https://www.projectlimitless.io/badger/badger/badge)](https://www.projectlimitless.io/badger/badger)
 
 [![Coverage Status](https://coveralls.io/repos/github/ProjectLimitless/Badger/badge.svg?branch=master)](https://coveralls.io/github/ProjectLimitless/Badger?branch=master)
 
@@ -16,7 +16,7 @@ The badge generated in the sample shows a simple build status check for the [ioR
 
 Clicking on the badge will take you to the generated status page.
 
-[![Badger](https://www.projectlimitless.io/badger/sample/badge)](https://www.projectlimitless.io/badger/sample)
+[![Badger](https://www.projectlimitless.io/badger-demo/sample/badge)](https://www.projectlimitless.io/badger-demo/sample)
 
 ## Getting Started
 

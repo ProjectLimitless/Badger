@@ -100,6 +100,9 @@ func New(config Config) (Badger, error) {
 	// serve JS files directly
 	jsServer := http.StripPrefix(basePath+"/js/", http.FileServer(http.Dir("./pages/js/")))
 	router.PathPrefix(basePath + "/js/").Handler(jsServer)
+	// serve image files directly
+	imgServer := http.StripPrefix(basePath+"/i/", http.FileServer(http.Dir("./pages/i/")))
+	router.PathPrefix(basePath + "/i/").Handler(imgServer)
 
 	badger.router = router
 
@@ -261,9 +264,9 @@ func (badger *Badger) ProjectBadgeHandler(w http.ResponseWriter, r *http.Request
 				case parsers.ProviderStatusSuccess:
 					imageReader, err = os.Open(filepath.Join(badger.BadgesPath, projectConfig.Badge.Template.Badges.Passing))
 				case parsers.ProviderStatusFailed:
-					imageReader, err = os.Open(filepath.Join(badger.BadgesPath, projectConfig.Badge.Template.Badges.Passing))
+					imageReader, err = os.Open(filepath.Join(badger.BadgesPath, projectConfig.Badge.Template.Badges.Failing))
 				case parsers.ProviderStatusUnknown:
-					imageReader, err = os.Open(filepath.Join(badger.BadgesPath, projectConfig.Badge.Template.Badges.Passing))
+					imageReader, err = os.Open(filepath.Join(badger.BadgesPath, projectConfig.Badge.Template.Badges.Unknown))
 				}
 				if err != nil {
 					badger.log.Error("Unable to load status badge: %s", err.Error())
