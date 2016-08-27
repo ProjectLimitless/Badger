@@ -88,6 +88,7 @@ type ServerConfig struct {
 }
 
 type Config struct {
-	Log    LogConfig    `json:"Log"`
-	Server ServerConfig `json:"Server"`
+	Log          LogConfig    `json:"Log"`
+	Server       ServerConfig `json:"Server"`
+	ProjectsPath string       `json:"ProjectsPath"`
 }

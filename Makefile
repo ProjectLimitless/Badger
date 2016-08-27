@@ -1,5 +1,6 @@
 .PHONY: build fmt run run_race test clean vendor_get
 
+GOPATH_ORIG := $(GOPATH)
 GOPATH := $(PWD)/vendor
 export GOPATH
 
@@ -21,7 +22,10 @@ test:
 	go test ./src/... -v
 
 test_cover:
-	go test ./src/... -v -cover
+	go test ./src/badger/parsers -v -cover
+
+test_cover_submit:
+	go test ./src/badger/parsers -v -cover -covermode=count -coverprofile=coverage.out
 
 clean:
 	rm ./bin/*

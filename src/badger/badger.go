@@ -57,7 +57,16 @@ func New(config Config) (Badger, error) {
 	log := NewLog(config.Log)
 
 	log.Debug("Setting up Badger...")
-	projectsPath := "projects"
+	var projectsPath string
+	if config.ProjectsPath == "" {
+		projectsPath = "projects"
+	} else {
+		var err error
+		projectsPath, err = filepath.Abs(config.ProjectsPath)
+		if err != nil {
+			return Badger{}, errors.New("Unable to get project path: " + err.Error())
+		}
+	}
 
 	if config.Server.IP == "" {
 		return Badger{}, errors.New("You must specify a bind address")
@@ -120,7 +129,10 @@ func New(config Config) (Badger, error) {
 		log.Debug("Project '%s' loaded", projectConfig.Name)
 	}
 	// Proper english for config vs configs count
-	if len(badger.Projects) == 1 {
+	if len(badger.Projects) == 0 {
+		log.Error("No project configs loaded")
+		return Badger{}, errors.New("No project configs loaded")
+	} else if len(badger.Projects) == 1 {
 		log.Info("Loaded %d project config", len(badger.Projects))
 	} else {
 		log.Info("Loaded %d project configs", len(badger.Projects))
