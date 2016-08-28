@@ -1,6 +1,6 @@
 # Badger
 
-[![Badger](https://www.projectlimitless.io/badger/badger/badge)](https://www.projectlimitless.io/badger/badger)
+[![Badger](https://www.projectlimitless.io/badger/badger/badge?1)](https://www.projectlimitless.io/badger/badger)
 
 [![Coverage Status](https://coveralls.io/repos/github/ProjectLimitless/Badger/badge.svg?branch=master)](https://coveralls.io/github/ProjectLimitless/Badger?branch=master)
 
