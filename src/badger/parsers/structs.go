@@ -17,16 +17,21 @@ package parsers
 import "time"
 
 const (
+	// ProviderStatusSuccess is the constant for success
 	ProviderStatusSuccess = "Passing"
-	ProviderStatusFailed  = "Failing"
+	// ProviderStatusFailed is the constant for failure
+	ProviderStatusFailed = "Failing"
+	// ProviderStatusUnknown is the constant for unknown statuses
 	ProviderStatusUnknown = "Unknown"
 )
 
+// Parser interface defines the functionality required by a parser
 type Parser interface {
 	Parse(raw []byte) (ProviderResult, error)
 	Name() string
 }
 
+// ProviderResult creats a standard result set for multiple CI tools
 type ProviderResult struct {
 	// The proper name of the CI tool that provided this result
 	ProperName string

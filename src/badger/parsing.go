@@ -23,7 +23,7 @@ import (
 	"./parsers"
 )
 
-// New creates a new instance of the specified parser
+// NewParser creates a new instance of the specified parser
 func NewParser(parserType string) (parsers.Parser, error) {
 	switch strings.ToLower(parserType) {
 	case ProviderTravisCI:
@@ -57,7 +57,7 @@ func FetchStatus(status StatusConfig) (parsers.ProviderResult, error) {
 	client := &http.Client{
 		Timeout: time.Second * 10,
 	}
-	request, err := http.NewRequest("GET", status.Url, nil)
+	request, err := http.NewRequest("GET", status.URL, nil)
 	if err != nil {
 		return result, err
 	}

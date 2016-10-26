@@ -19,22 +19,24 @@ import (
 	"time"
 )
 
+// TravisCIParser is the CI parser for Travis CI
 type TravisCIParser struct {
 }
 
+// TravisCIBuild is the JSON API structure for Travis CI
 type TravisCIBuild struct {
-	ID           int       `json:"id"`
-	RepositoryID int       `json:"repository_id"`
-	Number       string    `json:"number"`
-	State        string    `json:"state"`
-	Result       int       `json:"result"`
-	StartedAt    time.Time `json:"started_at"`
-	FinishedAt   time.Time `json:"finished_at"`
-	Duration     int       `json:"duration"`
-	Commit       string    `json:"commit"`
-	Branch       string    `json:"branch"`
-	Message      string    `json:"message"`
-	EventType    string    `json:"event_type"`
+	ID           int    `json:"id"`
+	RepositoryID int    `json:"repository_id"`
+	Number       string `json:"number"`
+	State        string `json:"state"`
+	Result       int    `json:"result"`
+	StartedAt    string `json:"started_at"`
+	FinishedAt   string `json:"finished_at"`
+	Duration     int    `json:"duration"`
+	Commit       string `json:"commit"`
+	Branch       string `json:"branch"`
+	Message      string `json:"message"`
+	EventType    string `json:"event_type"`
 }
 
 // Parse parses the json bytes into a provider result
@@ -59,15 +61,19 @@ func (parser *TravisCIParser) Parse(raw []byte) (ProviderResult, error) {
 		default:
 			result.Status = ProviderStatusUnknown
 		}
-		result.BuildDateTime = build.FinishedAt
+		//result.BuildDateTime = build.FinishedAt
+		if build.FinishedAt != "" && build.FinishedAt != "null" {
+			parsed, err := time.Parse("2006-01-02T15:04:05Z07:00", build.FinishedAt)
+			if err == nil {
+				result.BuildDateTime = parsed
+			}
+		}
 		result.CommitMessage = build.Message
 		result.CommitUser = "Unknown"
 		return result, nil
 
-	} else {
-		return result, errors.New("No builds found for Travis CI")
 	}
-	return result, nil
+	return result, errors.New("No builds found for Travis CI")
 }
 
 // Name returns the Proper name of the provider for the parser

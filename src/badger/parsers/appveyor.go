@@ -19,9 +19,11 @@ import (
 	"time"
 )
 
+// AppveyorParser is the CI parser for AppVeyor
 type AppveyorParser struct {
 }
 
+// AppveyorData is the JSON API structure for AppVeyor
 type AppveyorData struct {
 	Build struct {
 		BuildID           int       `json:"buildId"`
