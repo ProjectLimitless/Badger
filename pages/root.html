@@ -44,14 +44,18 @@
         $(document).ready(function(e){
             for (i = 0; i < projects.length; i++) {
                 var project = projects[i];
-                $.ajax({
-                    url: baseUrl + project + '/status',
-                    success: function(data){
-                        var holder = $('#project-' + project + " .overview");
-                        holder.html(data);
-                    }
-                });
+                fetchStatus(project);
             }
         });
+
+        function fetchStatus(project) {
+            $.ajax({
+                url: baseUrl + project + '/status',
+                success: function(data){
+                    var holder = $('#project-' + project + " .overview");
+                    holder.html(data);
+                }
+            });
+        }
     </script>
 </html>
