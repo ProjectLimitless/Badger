@@ -73,11 +73,16 @@ type ProjectConfig struct {
 	Page     PageConfig     `json:"Page"`
 }
 
-// PageData is teh setup for a project page
+// PageData is the setup for a project page
 type PageData struct {
 	ProjectName string
 	Overall     parsers.ProviderResult
 	Providers   map[string]parsers.ProviderResult
+}
+
+// RootPageData contains the information for the root project list
+type RootPageData struct {
+	Projects map[string]ProjectConfig
 }
 
 // LogOutputConfig sets up the output formats for log files

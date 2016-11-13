@@ -1,0 +1,16 @@
+<div class="overview">
+    Overall status: <span class="{{.Overall.Status}}">{{.Overall.Status}}</span>
+</div>
+{{ range $provider, $status := .Providers}}
+<div class="status" style="margin-bottom: 20px;">
+    {{ $status.ProperName }}: <span class="{{ $status.Status}}">{{ $status.Status}}</span>
+    {{ if $status.IsSuccess }}
+        ({{ $status.BuildDateTime.Format "02 Jan 2006 15:04:05" }})<br/>
+        <span style="color: #777">"{{ $status.CommitMessage }}"</span>
+    {{ end }}
+    {{ if eq $status.IsSuccess false }}
+        <br/>
+        <span style="color: #600">"{{ $status.Error }}"</span>
+    {{ end }}
+</div>
+{{ end }}

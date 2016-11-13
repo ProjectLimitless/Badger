@@ -96,6 +96,7 @@ func New(config Config) (Badger, error) {
 	router.HandleFunc(basePath+"/", badger.RootHandler)
 	router.HandleFunc(basePath+"/{project}", badger.ProjectPageHandler)
 	router.HandleFunc(basePath+"/{project}/badge", badger.ProjectBadgeHandler)
+	router.HandleFunc(basePath+"/{project}/status", badger.ProjectStatusHandler)
 	// serve CSS files directly
 	cssServer := http.StripPrefix(basePath+"/css/", http.FileServer(http.Dir("./pages/css/")))
 	router.PathPrefix(basePath + "/css/").Handler(cssServer)
@@ -130,7 +131,7 @@ func New(config Config) (Badger, error) {
 			continue
 		}
 
-		badger.Projects[strings.ToLower(projectConfig.Name)] = projectConfig
+		badger.Projects[strings.Replace(strings.ToLower(projectConfig.Name), " ", "-", -1)] = projectConfig
 		log.Debug("Project '%s' loaded", projectConfig.Name)
 	}
 	// Proper english for config vs configs count
@@ -159,7 +160,26 @@ func (badger *Badger) Start() {
 // RootHandler handles calls to the root path and renders
 // all the projects loaded on the root.html template
 func (badger *Badger) RootHandler(w http.ResponseWriter, r *http.Request) {
-	badger.log.Debug("Request received")
+	pagePath := filepath.Join(badger.PagesPath, "root.html")
+	badger.log.Debug("Loading root page at %s", pagePath)
+
+	page, err := template.ParseFiles(pagePath)
+	if err != nil {
+		badger.log.Warning("Root page not found: %s.", err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Sprintf("Root page could not be loaded '%s': %s", "root.html", err.Error())))
+		return
+	}
+
+	pageData := RootPageData{
+		Projects: badger.Projects,
+	}
+
+	err = page.Execute(w, pageData)
+	if err != nil {
+		badger.log.Error("Unable to execute template root: ", err.Error())
+	}
+
 }
 
 // ProjectPageHandler handles calls to /{project}
@@ -299,6 +319,53 @@ func (badger *Badger) ProjectBadgeHandler(w http.ResponseWriter, r *http.Request
 		w.Header().Set("Expires", badger.cacheUntil)
 		writeImage(badger.log, w, img)
 		badger.log.Info("Badge rendered")
+
+	} else {
+		badger.log.Error("Project config not found for project '%s'", project)
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte(fmt.Sprintf("Project config not found for project '%s'", project)))
+		return
+	}
+}
+
+// ProjectStatusHandler handles calls to /{project}/status and returns the
+// current status for each provider as HTML
+func (badger *Badger) ProjectStatusHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	project := vars["project"]
+	project = strings.ToLower(project)
+	badger.log.Debug("Request received for project status '%s'", project)
+
+	if projectConfig, ok := badger.Projects[project]; ok {
+
+		overallStatus, providerStatuses := FetchAllStatuses(projectConfig.Statuses)
+
+		pagePath := filepath.Join(badger.PagesPath, project+".ajax.html")
+		badger.log.Debug("Loading ajax project page at %s", pagePath)
+
+		page, err := template.ParseFiles(pagePath)
+		if err != nil {
+			badger.log.Warning("Ajax project page not found: %s. Using default.", err.Error())
+			// load the default page
+			page, err = template.ParseFiles(filepath.Join(badger.PagesPath, "ajax.html"))
+			if err != nil {
+				badger.log.Error("Default ajax page does not exist at '%s': %s", "ajax.html", err.Error())
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("Default page could not be loaded '%s': %s", "default.html", err.Error())))
+				return
+			}
+		}
+
+		pageData := PageData{
+			ProjectName: projectConfig.Name,
+			Overall:     overallStatus,
+			Providers:   providerStatuses,
+		}
+
+		err = page.Execute(w, pageData)
+		if err != nil {
+			badger.log.Error("Unable to execute template for '%'", project, err.Error())
+		}
 
 	} else {
 		badger.log.Error("Project config not found for project '%s'", project)
